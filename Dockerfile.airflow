@@ -1,0 +1,8 @@
+FROM apache/airflow:2.5.1
+
+USER root
+# Django 설치
+RUN pip install django
+
+# 다시 airflow 사용자로
+USER airflow
