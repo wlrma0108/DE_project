@@ -1,11 +1,13 @@
+# Dockerfile.airflow
 ARG AIRFLOW_IMAGE
 FROM ${AIRFLOW_IMAGE}
 
+# 설치 목록
 COPY requirements.txt /requirements.txt
 
+# root 금지 → airflow 유저로 실행
 USER airflow
 
-RUN pip install --upgrade pip setuptools wheel --user \
- && pip install --user -r /requirements.txt
-
-# USER airflow  # 이미 airflow 이므로 다시 선언 불필요
+# 가상환경 안으로 직접 설치 (—user 사용 금지)
+RUN python -m pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    python -m pip install --no-cache-dir -r /requirements.txt
