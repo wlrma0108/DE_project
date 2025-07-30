@@ -1,8 +1,11 @@
-FROM apache/airflow:2.5.1
+ARG AIRFLOW_IMAGE
+FROM ${AIRFLOW_IMAGE}
 
-USER root
-# Django 설치
-RUN pip install django
+COPY requirements.txt /requirements.txt
 
-# 다시 airflow 사용자로
 USER airflow
+
+RUN pip install --upgrade pip setuptools wheel --user \
+ && pip install --user -r /requirements.txt
+
+# USER airflow  # 이미 airflow 이므로 다시 선언 불필요
