@@ -14,13 +14,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "places",  
+    "rest_framework", 
+    "django_filters"
 ]
 
 LANGUAGE_CODE = "ko-kr"
 TIME_ZONE = "Asia/Seoul"
 USE_I18N = True
 USE_TZ = False  
-
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend",
+                                "rest_framework.filters.SearchFilter",
+                                "rest_framework.filters.OrderingFilter"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
+}
 MIDDLEWARE = [
     # 세션 미들웨어는 인증보다 앞에 와야 합니다
     'django.contrib.sessions.middleware.SessionMiddleware',
